@@ -44,11 +44,15 @@ public class ReceiveActivity extends AppCompatActivity {
     BluetoothSocket btSocket = null;
     ConnectedThread connectedThread = null;
 
+    Intent receiveActivityIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
+
+        receiveActivityIntent = getIntent();
 
         // Get permission
         String[] permission_list = {
@@ -95,6 +99,7 @@ public class ReceiveActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), GraphActivity.class);
+                intent.putExtra("ID", receiveActivityIntent.getStringExtra("ID"));
                 startActivity(intent);
             }
         });
@@ -212,7 +217,7 @@ public class ReceiveActivity extends AppCompatActivity {
             // start bluetooth communication
             if (flag) {
 //                textStatus.setText("connected to " + name);
-                connectedThread = new ConnectedThread(btSocket, contextText);
+                connectedThread = new ConnectedThread(btSocket, contextText, receiveActivityIntent.getStringExtra("ID"));
                 connectedThread.start();
             }
 

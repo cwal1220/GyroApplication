@@ -6,6 +6,9 @@ import android.util.Log;
 import android.widget.TextView;
 import android.os.Handler;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,14 +22,16 @@ class ConnectedThread extends Thread {
     private boolean ThreadFlag = true;
 
     private String result = "";
+    private String userId = "";
 
     TextView contextText;
 
     Handler handler = new Handler();
 
-    public ConnectedThread(BluetoothSocket socket, TextView contexttext) {
+    public ConnectedThread(BluetoothSocket socket, TextView contexttext, String id) {
         mmSocket = socket;
         contextText = contexttext;
+        userId = id;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
 
@@ -75,6 +80,19 @@ class ConnectedThread extends Thread {
                                           "Avg : " + result.split(",")[1] + "\n" +
                                           "Status : " + result.split(",")[2];
                             contextText.setText(Text);
+
+                            new Thread(() -> {
+                                JSONObject updateParam = new JSONObject();
+                                JSONObject postParam = new JSONObject();
+                                try {
+                                    postParam.put("id", userId);
+                                    postParam.put("data", result.split(",")[0]);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                PostManager postManager = new PostManager("138.2.126.137");
+                                JSONObject postRet = postManager.sendPost(postParam.toString(), "update/gyro");
+                            }).start();
                         }
                     });
                 }

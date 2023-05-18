@@ -89,7 +89,7 @@ public class GraphActivity extends AppCompatActivity {
                 JSONObject jo = jsonArray.getJSONObject(i);
                 int dayofmonth = jo.getInt("dayofmonth");
                 float average = (float)jo.getDouble("average");
-                entries.set(dayofmonth, new Entry(dayofmonth, average));
+                entries.set(dayofmonth-1, new Entry(dayofmonth, average));
             }
 
 

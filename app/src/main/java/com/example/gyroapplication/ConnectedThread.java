@@ -1,6 +1,7 @@
 package com.example.gyroapplication;
 
 import android.bluetooth.BluetoothSocket;
+import android.graphics.Color;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
@@ -76,10 +77,27 @@ class ConnectedThread extends Thread {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            String Text = "Angle : " + result.split(",")[0] + "\n" +
-                                          "Avg : " + result.split(",")[1] + "\n" +
-                                          "Status : " + result.split(",")[2];
+                            Log.d("Telechips", result);
+                            int angle = Integer.parseInt(result.split(",")[0]);
+                            int agv = Integer.parseInt(result.split(",")[1]);
+                            int status = Integer.parseInt(result.split(",")[2]);
+
+                            String Text = "Angle : " + angle + "\n" +
+                                          "Avg : " + agv + "\n" +
+                                          "Status : " + status;
                             contextText.setText(Text);
+                            if(status == 1)
+                            {
+                                contextText.setBackgroundColor(Color.YELLOW);
+                            }
+                            else if(status == 2)
+                            {
+                                contextText.setBackgroundColor(Color.RED);
+                            }
+                            else
+                            {
+                                contextText.setBackgroundColor(Color.GREEN);
+                            }
 
                             new Thread(() -> {
                                 JSONObject updateParam = new JSONObject();

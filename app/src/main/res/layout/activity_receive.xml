@@ -40,11 +40,8 @@
                 android:id="@+id/btn_search"
                 android:layout_width="128dp"
                 android:layout_height="wrap_content"
-                android:background="#C0C0C0"
                 android:onClick="onClickButtonSearch"
                 android:text="Search"
-                android:textColor="#ffffff"
-                android:textColorHint="@color/white"
                 tools:ignore="OnClick" />
         </LinearLayout>
 

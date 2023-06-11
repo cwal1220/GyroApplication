@@ -77,10 +77,16 @@ class ConnectedThread extends Thread {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+
                             Log.d("Telechips", result);
-                            int angle = Integer.parseInt(result.split(",")[0]);
-                            int agv = Integer.parseInt(result.split(",")[1]);
-                            int status = Integer.parseInt(result.split(",")[2]);
+                            String[] splitedResult = result.split(",");
+                            if(splitedResult.length != 3)
+                            {
+                                return;
+                            }
+                            int angle = Integer.parseInt(splitedResult[0]);
+                            int agv = Integer.parseInt(splitedResult[1]);
+                            int status = Integer.parseInt(splitedResult[2]);
 
                             String Text = "Angle : " + angle + "\n" +
                                           "Avg : " + agv + "\n" +

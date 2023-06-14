@@ -33,6 +33,7 @@ public class ReceiveActivity extends AppCompatActivity {
     UUID BT_MODULE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"); // "random" unique identifier
 
     TextView contextText;
+    TextView indicatorText;
     Button btnSearch;
     Button btnGraph;
     ListView listView;
@@ -84,6 +85,7 @@ public class ReceiveActivity extends AppCompatActivity {
 
         // variables
         contextText = findViewById(R.id.contextText);
+        indicatorText = findViewById(R.id.indicatorText);
         btnSearch = findViewById(R.id.btn_search);
         btnGraph = findViewById(R.id.btn_graph);
         listView = findViewById(R.id.listview);
@@ -217,7 +219,7 @@ public class ReceiveActivity extends AppCompatActivity {
             // start bluetooth communication
             if (flag) {
 //                textStatus.setText("connected to " + name);
-                connectedThread = new ConnectedThread(btSocket, contextText, receiveActivityIntent.getStringExtra("ID"));
+                connectedThread = new ConnectedThread(btSocket, contextText, indicatorText,receiveActivityIntent.getStringExtra("ID"));
                 connectedThread.start();
             }
 

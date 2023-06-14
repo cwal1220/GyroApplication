@@ -26,12 +26,14 @@ class ConnectedThread extends Thread {
     private String userId = "";
 
     TextView contextText;
+    TextView indicatorText;
 
     Handler handler = new Handler();
 
-    public ConnectedThread(BluetoothSocket socket, TextView contexttext, String id) {
+    public ConnectedThread(BluetoothSocket socket, TextView contexttext, TextView indicatorText, String id) {
         mmSocket = socket;
-        contextText = contexttext;
+        this.contextText = contexttext;
+        this.indicatorText = indicatorText;
         userId = id;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -94,15 +96,15 @@ class ConnectedThread extends Thread {
                             contextText.setText(Text);
                             if(status == 1)
                             {
-                                contextText.setBackgroundColor(Color.YELLOW);
+                                indicatorText.setBackgroundColor(Color.YELLOW);
                             }
                             else if(status == 2)
                             {
-                                contextText.setBackgroundColor(Color.RED);
+                                indicatorText.setBackgroundColor(Color.RED);
                             }
                             else
                             {
-                                contextText.setBackgroundColor(Color.GREEN);
+                                indicatorText.setBackgroundColor(Color.GREEN);
                             }
 
                             new Thread(() -> {
